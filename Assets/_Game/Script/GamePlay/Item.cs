@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     [SerializeField] private ItemType type;
+    public ItemType Type => type;
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private float speed = 2;
@@ -32,7 +34,7 @@ public class Item : MonoBehaviour
 
         while (timeCount < time)
         {
-            time += Time.deltaTime;
+            timeCount += Time.deltaTime;
             rb.position = Vector3.Lerp(startPoint, targetPoint, timeCount / time);
             rb.rotation = Quaternion.Lerp(startRot, targetRot, timeCount / time);
             yield return null;
@@ -54,5 +56,16 @@ public class Item : MonoBehaviour
     {
         OnFree();
         rb.AddForce(force);
+        Debug.Log(force);
+    }
+
+    internal void SetKinematic(bool v)
+    {
+        rb.isKinematic = v;
+    }
+
+    internal void Collect()
+    {
+        gameObject.SetActive(false);
     }
 }
