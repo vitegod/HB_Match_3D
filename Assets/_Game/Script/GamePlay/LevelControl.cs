@@ -16,7 +16,7 @@ public class LevelControl : MonoBehaviour
             itemSelecting = GetSelectItem();
             if (itemSelecting != null)
             {
-                itemSelecting.OnTake();
+                itemSelecting.OnSelect();
                 //Debug.Log(itemSelecting.name);
                 stage.RemoveItem(itemSelecting);    
             }
@@ -39,7 +39,7 @@ public class LevelControl : MonoBehaviour
                 }
                 else
                 {
-                    itemSelecting.OnFree();
+                    itemSelecting.OnDrop();
                 }
             }
 

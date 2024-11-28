@@ -13,16 +13,19 @@ public class Item : MonoBehaviour
 
     public bool IsArrive(Vector3 target)
     {
+        //kiem tra xem item co gan diem target hay khong
         return Vector3.Distance(rb.position, target) < 0.1f;
     }
 
     public void OnMove(Vector3 targetPoint)
     {
+        //di chuyen den vi tri target
         rb.position = Vector3.MoveTowards(rb.position, targetPoint, Time.deltaTime * speed);
     }
     
     public void OnMove(Vector3 targetPoint, Quaternion targetRot, float time)
     {
+        //di chuyen den vi tri target
         StartCoroutine(IEOnMove(targetPoint, targetRot, time));
     }
 
@@ -34,6 +37,7 @@ public class Item : MonoBehaviour
 
         while (timeCount < time)
         {
+            //loop theo thoi gian
             timeCount += Time.deltaTime;
             rb.position = Vector3.Lerp(startPoint, targetPoint, timeCount / time);
             rb.rotation = Quaternion.Lerp(startRot, targetRot, timeCount / time);
@@ -42,30 +46,34 @@ public class Item : MonoBehaviour
 
     }
 
-    public void OnTake()
+    public void OnSelect()
     {
+        //bat dau select
         rb.useGravity = false;
     }
 
-    public void OnFree()
+    public void OnDrop()
     {
         rb.useGravity = true;
     }
 
     public void Force(Vector3 force)
     {
-        OnFree();
+        //add them 1 luc cho item
+        OnDrop();
+        rb.velocity = Vector3.zero;
         rb.AddForce(force);
-        Debug.Log(force);
     }
 
     internal void SetKinematic(bool v)
     {
+        //set co tinh vat ly hay khong
         rb.isKinematic = v;
     }
 
     internal void Collect()
     {
+        //TODO: fix late
         gameObject.SetActive(false);
     }
 }
